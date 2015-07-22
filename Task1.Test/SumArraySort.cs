@@ -2,11 +2,11 @@
 
 namespace Task1.Test
 {
-    public sealed class SumArraySort : ICustomComparer
+    public sealed class SumArraySort : IComparer
     {
         public int Compare(int[] first, int[] second)
         {
-            return first.Sum() - second.Sum();
+            return second.Sum() - first.Sum();
         }
     }
 }
