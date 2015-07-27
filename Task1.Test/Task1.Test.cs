@@ -8,7 +8,7 @@ namespace Task1.Test
     {
         #region MaxValue_TestMethods
         [TestMethod]
-        public void MaxValue_PositiveNumbers()
+        public void MaxValueSort_PositiveNumbers()
         {
             int[] first = new[] {1, 2, 3, 10, 5};
             int[] second = new[] {5, 4, 13, 2, 1};
@@ -25,7 +25,7 @@ namespace Task1.Test
         }
 
         [TestMethod]
-        public void MaxValue_NegativeNumbers()
+        public void MaxValueSort_NegativeNumbers()
         {
             int[] first = new[] { -8, -2, -3, -10, -5 };
             int[] second = new[] { -5, -4, -13, -7, -9 };
@@ -42,7 +42,7 @@ namespace Task1.Test
         }
 
         [TestMethod]
-        public void MaxValue_MixedNumbers()
+        public void MaxValueSort_MixedNumbers()
         {
             int[] first = new[] { -1, 2, -3, 10, -5 };
             int[] second = new[] { 5, -4, -13, 2, 1 };
@@ -62,7 +62,7 @@ namespace Task1.Test
 
         #region SumArray_TestMethods
         [TestMethod]
-        public void SumArray_PositiveNumbers()
+        public void SumArraySort_PositiveNumbers()
         {
             int[] first = new[] { 1, 2, 3, 10, 5 }; //21
             int[] second = new[] { 5, 4, 13, 2, 1 }; //25
@@ -79,7 +79,7 @@ namespace Task1.Test
         }
 
         [TestMethod]
-        public void SumArray_NegativeNumbers()
+        public void SumArraySort_NegativeNumbers()
         {
             int[] first = new[] { -1, -2, -3, -10, -5 }; //-21
             int[] second = new[] { -5, -4, -13, -2, -1 }; //-25
@@ -96,7 +96,7 @@ namespace Task1.Test
         }
 
         [TestMethod]
-        public void SumArray_MixedNumbers()
+        public void SumArraySort_MixedNumbers()
         {
             int[] first = new[] { -1, 2, 3, -10, 5 }; //-1
             int[] second = new[] { -5, 4, 13, 2, -1 }; //13
@@ -121,7 +121,116 @@ namespace Task1.Test
             int[] third = new[] { -1, 12, 3, -4 }; //12
             int[][] array = new[] { first, second, third };
 
-            Sorter.Sort(array, null);
+            Sorter.Sort(array, (IComparer)null);
+        }
+
+        #endregion
+
+        #region Comparison_TestMethods
+        [TestMethod]
+        public void SumArrayComparison_PositiveNumbers()
+        {
+            int[] first = new[] { 1, 2, 3, 10, 5 }; //21
+            int[] second = new[] { 5, 4, 13, 2, 1 }; //25
+            int[] third = new[] { 1, 12, 3, 4 }; // 20
+            int[][] array = new[] { first, second, third };
+
+            Sorter.Sort(array, ComparisonSort.SumArrayComparisonDescending);
+
+            int[][] result = new[] { second, first, third };
+
+            Assert.IsTrue(CompareArrays(result, array));
+        }
+
+        [TestMethod]
+        public void SumArrayComparison_NegativeNumbers()
+        {
+            int[] first = new[] { -1, -2, -3, -10, -5 }; //-21
+            int[] second = new[] { -5, -4, -13, -2, -1 }; //-25
+            int[] third = new[] { -1, -12, -3, -4 }; //-20
+            int[][] array = new[] { first, second, third };
+
+            Sorter.Sort(array, ComparisonSort.SumArrayComparisonDescending);
+
+            int[][] result = new[] { third, first, second };
+
+            Assert.IsTrue(CompareArrays(result, array));
+        }
+
+        [TestMethod]
+        public void SumArrayComparison_MixedNumbers()
+        {
+            int[] first = new[] { -1, 2, 3, -10, 5 }; //-1
+            int[] second = new[] { -5, 4, 13, 2, -1 }; //13
+            int[] third = new[] { -1, 12, 3, -4 }; //10
+            int[][] array = new[] { first, second, third };
+
+            Sorter.Sort(array, ComparisonSort.SumArrayComparisonDescending);
+
+            int[][] result = new[] { second, third, first };
+
+            Assert.IsTrue(CompareArrays(result, array));
+        }
+
+        [TestMethod]
+        public void ArrayLengthComparison()
+        {
+            int[] first = new[] { 1, 2, 3, 10, 5 }; //5
+            int[] second = new[] { 5, 4, 13 }; //3
+            int[] third = new[] { 1, 12, 3, 4 }; // 4
+            int[] forth = null;
+            int[][] array = new[] { first, second, third, forth };
+
+            Sorter.Sort(array, ComparisonSort.ArrayLengthComparisonDescending);
+
+            int[][] result = new[] { first, third, second, forth};
+
+            Assert.IsTrue(CompareArrays(result, array));
+        }
+
+        [TestMethod]
+        public void MaxValueComparison_PositiveNumbers()
+        {
+            int[] first = new[] { 1, 2, 3, 10, 5 };
+            int[] second = new[] { 5, 4, 13, 2, 1 };
+            int[] third = new[] { 1, 12, 3, 4 };
+            int[][] array = new[] { first, second, third };
+
+            Sorter.Sort(array, ComparisonSort.MaxValueComparisonDescending);
+
+            int[][] result = new[] { second, third, first };
+
+            Assert.IsTrue(CompareArrays(result, array));
+        }
+
+        [TestMethod]
+        public void MaxValueComparison_NegativeNumbers()
+        {
+            int[] first = new[] { -8, -2, -3, -10, -5 };
+            int[] second = new[] { -5, -4, -13, -7, -9 };
+            int[] third = new[] { -14, -12, -3, -24 };
+            int[][] array = new[] { first, second, third };
+
+            Sorter.Sort(array, ComparisonSort.MaxValueComparisonDescending);
+
+            int[][] result = new[] { third, second, first };
+
+            Assert.IsTrue(CompareArrays(result, array));
+        }
+
+        [TestMethod]
+        public void MaxValueComparison_MixedNumbers()
+        {
+            int[] first = new[] { -1, 2, -3, 10, -5 };
+            int[] second = new[] { 5, -4, -13, 2, 1 };
+            int[] third = new[] { -1, 12, -3, 34 };
+            int[][] array = new[] { third, second, first };
+
+            Sorter.Sort(array, ComparisonSort.MaxValueComparisonDescending);
+
+            int[][] result = new[] { third, second, first };
+
+            Assert.IsTrue(CompareArrays(result, array));
         }
 
         #endregion
@@ -129,6 +238,14 @@ namespace Task1.Test
         #region Private methods
         private bool CompareArrays(int[][] first, int[][] second)
         {
+            if (first == null)
+                if (second == null)
+                    return true;
+                else
+                    return false;
+            if (second == null)
+                return false;
+
             int length = first.Length;
             if (length == second.Length)
             {
@@ -143,6 +260,14 @@ namespace Task1.Test
 
         private bool CompareArray(int[] first, int[] second)
         {
+            if (first == null)
+                if (second == null)
+                    return true;
+                else
+                    return false;
+            if (second == null)
+                return false;
+
             int length = first.Length;
             if (length == second.Length)
             {

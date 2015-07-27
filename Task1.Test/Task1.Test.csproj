@@ -50,6 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ComparisonSort.cs" />
     <Compile Include="MaxValueSort.cs" />
     <Compile Include="SumArraySort.cs" />
     <Compile Include="Task1.Test.cs" />
